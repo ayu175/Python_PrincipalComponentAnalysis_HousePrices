@@ -20,9 +20,9 @@ Built a multiple linear regression model using the retained principal components
 
 #### **4. Model Evaluation & Validation**
 Split the dataset into 60% training and 40% validation sets. Evaluated model performance using:
-• R² and Adjusted R²
-• Mean Squared Error (MSE)
-• Train vs. validation performance to assess overfitting
+##### • R² and Adjusted R²
+##### • Mean Squared Error (MSE)
+##### • Train vs. validation performance to assess overfitting
 
 Key results:
 R² ≈ 0.40, indicating the model explains ~40% of price variance
@@ -36,7 +36,7 @@ Interpreted regression coefficients and principal components to explain how unde
 
 #### **7. Real Estate Strategy Recommendations**
 Provided recommendations for real estate organizations, including:
-• Using the model as a pricing and valuation decision-support tool
-• Collecting additional data to improve predictive accuracy
-• Exploring advanced models (e.g., nonlinear models, ensemble methods)
-• Regular model retraining for market shifts
+##### • Using the model as a pricing and valuation decision-support tool
+##### • Collecting additional data to improve predictive accuracy
+##### • Exploring advanced models (e.g., nonlinear models, ensemble methods)
+##### • Regular model retraining for market shifts
