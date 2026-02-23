@@ -1,42 +1,57 @@
-# **House Price Prediction Using PCA and Multiple Linear Regression**
+# Housing Market Dimensionality Analysis
 
-## **Overview**
-This project focuses on predicting house prices using principal component analysis (PCA) and multiple linear regression based on property and neighborhood characteristics. PCA was used to reduce dimensionality and multicollinearity, and the regression model was evaluated using R², RMSE, and MSE to assess predictive performance. The results provide insights for real estate pricing, valuation, and investment decision-making.
+How accurately can we predict house prices using principal component analysis and multiple linear regression based on property and neighbourhood characteristics?
 
-### **Programming Language**
-Python
+This project develops a predictive model for residential house prices by reducing an 11-variable feature set into principal components, then applying multiple linear regression to assess which underlying dimensions of property and neighbourhood characteristics most influence pricing. The goal is to support data-driven decisions in real estate pricing, investment, and property valuation.
 
-### **Skills Showcased**
-This project demonstrates proficiency in several key areas:
+## Key Findings
 
-#### **1. Data Preparation & Feature Engineering**
-Selected property-level and neighborhood-level predictors (e.g., square footage, crime rate, school rating, distance to city center, amenities). Standardized numerical features and prepared data for PCA and regression modeling.
+- **4 principal components** were retained using the Kaiser rule, together capturing **51.89% of total variance** across 11 original features (PC1: 21.27%, PC2: 11.77%, PC3: 9.60%, PC4: 9.25%)
+- The final regression model achieved an **R² of 0.4029** on the training set and **0.3907** on the validation set, explaining roughly 40% of house price variance
+- **Training MSE (13,522,383,192) and validation MSE (13,637,998,390) were nearly identical**, indicating the model generalizes reliably without overfitting
+- All four principal components passed backward stepwise elimination (p < 0.05), confirming each contributed meaningfully to the model
+- The regression equation is: **Price = $309,000 + ($54,730 × PC1) − ($19,220 × PC2) − ($12,080 × PC3) + ($35,760 × PC4)**
+- A Durbin-Watson statistic of **1.991** confirmed no significant autocorrelation in the residuals
+- Residual analysis revealed violations of linearity, homoscedasticity, and normality — suggesting the model underperforms at extreme price points and that log-transforming the target variable may improve future iterations
 
-#### **2. Dimensionality Reduction (Principal Component Analysis)**
-Applied PCA to transform correlated predictors into uncorrelated principal components. Retained four principal components using the Kaiser rule, capturing 51.89% of total variance, reducing multicollinearity and simplifying the regression model.
+> 💡 **Interpretation:** An R² of ~0.40 is a realistic result for housing data, where unmeasured factors like interior condition, recent renovations, and buyer sentiment account for significant price variance. The near-identical train/validation MSE supports using this model as a reliable pricing baseline — particularly for mid-range properties — rather than a precise valuator.
 
-#### **3. Multiple Linear Regression Modeling**
-Built a multiple linear regression model using the retained principal components to predict house prices. Used backward stepwise elimination to optimize model predictors and ensure statistical significance.
+## Dataset
 
-#### **4. Model Evaluation & Validation**
-Split the dataset into 60% training and 40% validation sets. Evaluated model performance using:
-##### • R² and Adjusted R²
-##### • Mean Squared Error (MSE)
-##### • Train vs. validation performance to assess overfitting
+Residential property dataset with **11 numeric continuous features** used as predictors:
 
-Key results:
-R² ≈ 0.40, indicating the model explains ~40% of price variance
-Similar MSE on training and validation sets, suggesting stable generalization
+| Feature | Level |
+|---|---|
+| Square Footage | Property |
+| Backyard Space | Property |
+| Age of Home | Property |
+| Renovation Quality | Property |
+| Crime Rate | Neighbourhood |
+| School Rating | Neighbourhood |
+| Distance to City Center | Neighbourhood |
+| Employment Rate | Neighbourhood |
+| Property Tax Rate | Neighbourhood |
+| Local Amenities | Neighbourhood |
+| Transport Access | Neighbourhood |
 
-#### **5. Statistical Assumption Testing**
-Evaluated regression assumptions including linearity, homoscedasticity, normality of residuals, independence of errors (Durbin–Watson), and multicollinearity. Identified violations and discussed potential transformations and modeling improvements.
+**Target variable:** House Price (continuous)
 
-#### **6. Business Insight & Interpretation**
-Interpreted regression coefficients and principal components to explain how underlying property and neighborhood factors influence house prices. Discussed trade-offs between dimensionality reduction and predictive accuracy.
+## Approach
 
-#### **7. Real Estate Strategy Recommendations**
-Provided recommendations for real estate organizations, including:
-##### • Using the model as a pricing and valuation decision-support tool
-##### • Collecting additional data to improve predictive accuracy
-##### • Exploring advanced models (e.g., nonlinear models, ensemble methods)
-##### • Regular model retraining for market shifts
+Features were standardized (mean = 0, SD = 1) before applying PCA to ensure no single variable dominated variance due to scale differences. The Kaiser rule (eigenvalue > 1) was used to select four components for retention. A multiple linear regression model was then built on those components and refined using backward stepwise elimination, which iteratively removes predictors with p-values above 0.05. All four components were retained, each contributing a statistically significant effect on price.
+
+Model assumptions were evaluated in full:
+
+| Assumption | Result | Notes |
+|---|---|---|
+| Linearity | ❌ Violated | Residuals vs. fitted plot shows a funnel shape |
+| Homoscedasticity | ❌ Violated | Slight funnel shape indicates heteroscedasticity |
+| Independence of errors | ✅ Satisfied | Durbin-Watson = 1.991 |
+| Normality of residuals | ❌ Violated | Omnibus and Jarque-Bera p ≈ 0.000; skew = 0.733, kurtosis = 3.664 |
+| No multicollinearity | ✅ Satisfied | All correlations between PCs < 0.6 |
+
+Transformations to the dependent variable (e.g., log price) are recommended to address the linearity, homoscedasticity, and normality violations in future iterations.
+
+## Tools
+
+Python · pandas · NumPy · scikit-learn (PCA, StandardScaler, train_test_split, metrics) · statsmodels · matplotlib · seaborn
