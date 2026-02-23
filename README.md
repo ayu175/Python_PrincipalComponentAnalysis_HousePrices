@@ -14,7 +14,7 @@ This project develops a predictive model for residential house prices by reducin
 - A Durbin-Watson statistic of **1.991** confirmed no significant autocorrelation in the residuals
 - Residual analysis revealed violations of linearity, homoscedasticity, and normality — suggesting the model underperforms at extreme price points and that log-transforming the target variable may improve future iterations
 
-> 💡 **Interpretation:** An R² of ~0.40 is a realistic result for housing data, where unmeasured factors like interior condition, recent renovations, and buyer sentiment account for significant price variance. The near-identical train/validation MSE supports using this model as a reliable pricing baseline — particularly for mid-range properties — rather than a precise valuator.
+> **Interpretation:** An R² of ~0.40 is a realistic result for housing data, where unmeasured factors like interior condition, recent renovations, and buyer sentiment account for significant price variance. The near-identical train/validation MSE supports using this model as a reliable pricing baseline, particularly for mid-range properties, rather than a precise valuator.
 
 ## Dataset
 
